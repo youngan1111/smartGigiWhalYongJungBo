@@ -2,6 +2,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "cheerio": "^1.0.0-rc.3",
+    "googleapis": "39",
     "iconv-lite": "^0.6.2"
   }
 }

@@ -18,7 +18,9 @@ const getPage = () => {
 
             for (let i = 0; i < arr.length; i++) {
                 console.log(i)
-                console.log(arr[i].children[0].data)
+                if ($(arr[i]).text() === '') {
+                    console.log($(arr[i]).children('img').attr('src'))
+                } else console.log($(arr[i]).text())
             }
 
         });
