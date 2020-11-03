@@ -65,6 +65,7 @@ const getPage = () => {
                     }
                 }
             )
+
             const auth = await authorize();
             const docs = google.docs({
                 version: "v1",
