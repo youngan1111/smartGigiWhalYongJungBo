@@ -24,14 +24,7 @@ async function main(YOUR_DOCUMENT_ID) {
         documentId: YOUR_DOCUMENT_ID,
         requestBody: {
             requests: [
-                {
-                    insertText: {
-                        location: {
-                            index: 1
-                        },
-                        text: "hello!\n"
-                    }
-                }
+               
             ]
         }
     });

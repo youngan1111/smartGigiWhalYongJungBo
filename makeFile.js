@@ -5,26 +5,78 @@ const { google } = require("googleapis");
 const token = require("./token.json");
 const credentials = require("./credentials.json");
 
+function authorize() {
+    const { client_secret, client_id, redirect_uris } = credentials.installed;
+    const oAuth2Client = new google.auth.OAuth2(
+        client_id,
+        client_secret,
+        redirect_uris[0]
+    );
+    oAuth2Client.setCredentials(token);
+    return oAuth2Client;
+}
+
 const getPage = () => {
     axios({
         method: 'get',
         url: 'https://news.appstory.co.kr/plan14022',
         responseType: 'arraybuffer'
     })
-        .then(function (response) {
-            let $ = cheerio.load(iconv.decode(response.data, 'EUC-KR').toString())
+        .then(async function (response) {
+            let requests = [];
 
-            console.log($('#read').children('div.article_top').children('div.crop_img_wrap').children('div.desc_group').children('h1').text())
+            let $ = cheerio.load(iconv.decode(response.data, 'EUC-KR').toString())
 
             let arr = $('#read').children('div.board_read').children('p')
 
-            for (let i = 0; i < arr.length; i++) {
-                console.log(i)
+
+            for (let i = arr.length - 1; i >= 0; i--) {
                 if ($(arr[i]).text() === '') {
-                    console.log($(arr[i]).children('img').attr('src'))
-                } else console.log($(arr[i]).text())
+                    requests.push(
+                        {
+                            insertInlineImage: {
+                                location: { index: 1 },
+                                uri: $(arr[i]).children('img').attr('src')
+                            }
+                        }
+
+                    )
+                } else {
+                    requests.push(
+                        {
+                            insertText: {
+                                location: {
+                                    index: 1
+                                },
+                                text: $(arr[i]).text() + '\n'
+                            }
+                        }
+                    )
+                }
             }
 
+            requests.push(
+                {
+                    insertText: {
+                        location: {
+                            index: 1
+                        },
+                        text: $('#read').children('div.article_top').children('div.crop_img_wrap').children('div.desc_group').children('h1').text()
+                    }
+                }
+            )
+            const auth = await authorize();
+            const docs = google.docs({
+                version: "v1",
+                auth
+            });
+            await docs.documents.batchUpdate({
+                auth,
+                documentId: '1BtTeL1l1fhJPEE04Hz3xlAEsFcmDirlO3WlLczqWga0',
+                requestBody: {
+                    requests
+                }
+            });
         });
 }
 
