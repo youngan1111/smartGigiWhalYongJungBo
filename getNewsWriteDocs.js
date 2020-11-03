@@ -80,5 +80,3 @@ const getPage = () => {
             });
         });
 }
-
-getPage()
