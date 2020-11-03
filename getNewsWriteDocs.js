@@ -29,7 +29,6 @@ const getPage = () => {
 
             let arr = $('#read').children('div.board_read').children('p')
 
-
             for (let i = arr.length - 1; i >= 0; i--) {
                 if ($(arr[i]).text() === '') {
                     requests.push(
@@ -42,13 +41,14 @@ const getPage = () => {
 
                     )
                 } else {
+                    if ($(arr[i]).text().indexOf('\n') > 0) $(arr[i]).text().replace(/\n/gi, '');
                     requests.push(
                         {
                             insertText: {
                                 location: {
                                     index: 1
                                 },
-                                text: $(arr[i]).text() + '\n'
+                                text: $(arr[i]).text().replace(/\s/g, '') + '\n'
                             }
                         }
                     )
