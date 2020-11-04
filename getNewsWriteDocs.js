@@ -54,7 +54,7 @@ module.exports = () => {
                                     location: {
                                         index: 1
                                     },
-                                    text: $(arr[i]).text().replace(/\s/g, '') + '\n'
+                                    text: $(arr[i]).text() + '\n'
                                 }
                             }
                         )
