@@ -16,7 +16,7 @@ function authorize() {
     return oAuth2Client;
 }
 
-const getPage = () => {
+module.exports = () => {
     axios({
         method: 'get',
         url: 'https://news.appstory.co.kr/plan14022',

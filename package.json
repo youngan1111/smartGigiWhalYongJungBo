@@ -5,9 +5,9 @@
     "googleapis": "39",
     "iconv-lite": "^0.6.2"
   },
-  "name": "prettyprint",
+  "name": "crawling",
   "version": "0.0.1",
-  "description": "Pretty print a JSON file.",
+  "description": "crawling",
   "main": "getNewsWriteDocs.js",
   "bin": "bin.js",
   "author": "anybody",
