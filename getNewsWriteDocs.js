@@ -84,6 +84,8 @@ module.exports = () => {
                         requests
                     }
                 });
+
+                console.log('done!')
             });
     });
 }
