@@ -20,10 +20,11 @@ function authorize() {
 module.exports = () => {
     prompt.start();
 
+    console.log('크롤링할 앱스토리 기획의 번호를 적어주세요 ex) https://news.appstory.co.kr/plan13998 의 "plan13998"')
     prompt.get(['url'], function (err, res) {
         axios({
             method: 'get',
-            url: res.url,
+            url: `https://news.appstory.co.kr/${res.url}`,
             responseType: 'arraybuffer'
         })
             .then(async function (response) {
