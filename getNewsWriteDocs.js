@@ -36,15 +36,16 @@ module.exports = () => {
 
                 for (let i = arr.length - 1; i >= 0; i--) {
                     if ($(arr[i]).text() === '') {
-                        requests.push(
-                            {
-                                insertInlineImage: {
-                                    location: { index: 1 },
-                                    uri: $(arr[i]).children('img').attr('src')
+                        if (typeof $(arr[i]).children('img').attr('src') !== 'undefined') {
+                            requests.push(
+                                {
+                                    insertInlineImage: {
+                                        location: { index: 1 },
+                                        uri: $(arr[i]).children('img').attr('src')
+                                    }
                                 }
-                            }
-
-                        )
+                            )
+                        }
                     } else {
                         if ($(arr[i]).text().indexOf('\n') > 0) $(arr[i]).text().replace(/\n/gi, '');
                         requests.push(
