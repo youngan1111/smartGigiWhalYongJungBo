@@ -19,8 +19,8 @@ function authorize() {
 
 module.exports = () => {
     prompt.start();
-
     console.log('크롤링할 앱스토리 기획의 번호를 적어주세요 ex)"https://news.appstory.co.kr/plan13998"의 "plan13998"')
+
     prompt.get(['url'], function (err, res) {
         axios({
             method: 'get',
@@ -44,8 +44,8 @@ module.exports = () => {
                                 }
                             }
                         )
-                    } else {
-                        // if ($(arr[i]).text().indexOf('\n') > 0) $(arr[i]).text().replace(/\n/gi, '');
+                    } else if ($(arr[i]).find('ins').length === 0) {
+                        // if ($(arr[i]).text().indexOf('▲​') != -1) 
                         requests.push(
                             {
                                 insertText: {
@@ -66,6 +66,33 @@ module.exports = () => {
                                 index: 1
                             },
                             text: $('#read').children('div.article_top').children('div.crop_img_wrap').children('div.desc_group').children('h1').text()
+                        }
+                    },
+                    {
+                        updateTextStyle: {
+                            range: {
+                                startIndex: 1,
+                                endIndex: $('#read').children('div.article_top').children('div.crop_img_wrap').children('div.desc_group').children('h1').text().length + 1
+                            },
+                            textStyle: {
+                                fontSize: {
+                                    magnitude: 17,
+                                    unit: 'PT'
+                                },
+                            },
+                            fields: 'fontSize'
+                        }
+                    },
+                    {
+                        updateParagraphStyle: {
+                            range: {
+                                startIndex: 1,
+                                endIndex: 2
+                            },
+                            paragraphStyle: {
+                                "alignment": "CENTER"
+                            },
+                            fields: "alignment"
                         }
                     }
                 )
