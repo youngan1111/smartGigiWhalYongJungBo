@@ -20,7 +20,7 @@ function authorize() {
 module.exports = () => {
     prompt.start();
 
-    console.log('크롤링할 앱스토리 기획의 번호를 적어주세요 ex) https://news.appstory.co.kr/plan13998 의 "plan13998"')
+    console.log('크롤링할 앱스토리 기획의 번호를 적어주세요 ex)"https://news.appstory.co.kr/plan13998"의 "plan13998"')
     prompt.get(['url'], function (err, res) {
         axios({
             method: 'get',
@@ -35,19 +35,17 @@ module.exports = () => {
                 let arr = $('#read').children('div.board_read').children('p')
 
                 for (let i = arr.length - 1; i >= 0; i--) {
-                    if ($(arr[i]).text() === '') {
-                        if (typeof $(arr[i]).children('img').attr('src') !== 'undefined') {
-                            requests.push(
-                                {
-                                    insertInlineImage: {
-                                        location: { index: 1 },
-                                        uri: $(arr[i]).children('img').attr('src')
-                                    }
+                    if (typeof $(arr[i]).find("img").attr('src') !== 'undefined') {
+                        requests.push(
+                            {
+                                insertInlineImage: {
+                                    location: { index: 1 },
+                                    uri: $(arr[i]).find("img").attr('src')
                                 }
-                            )
-                        }
+                            }
+                        )
                     } else {
-                        if ($(arr[i]).text().indexOf('\n') > 0) $(arr[i]).text().replace(/\n/gi, '');
+                        // if ($(arr[i]).text().indexOf('\n') > 0) $(arr[i]).text().replace(/\n/gi, '');
                         requests.push(
                             {
                                 insertText: {
