@@ -45,7 +45,6 @@ module.exports = () => {
                             }
                         )
                     } else if ($(arr[i]).find('ins').length === 0) {
-                        // if ($(arr[i]).text().indexOf('▲​') != -1) 
                         requests.push(
                             {
                                 insertText: {
@@ -53,6 +52,17 @@ module.exports = () => {
                                         index: 1
                                     },
                                     text: $(arr[i]).text() + '\n'
+                                }
+                            }
+                        )
+                    } else if ($(arr[i]).find('ins').length !== 0) {
+                        requests.push(
+                            {
+                                insertText: {
+                                    location: {
+                                        index: 1
+                                    },
+                                    text: $(arr[i]).find('b').text() + '\n'
                                 }
                             }
                         )
